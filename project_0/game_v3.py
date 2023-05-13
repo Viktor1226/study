@@ -11,21 +11,20 @@ def random_predict(number:int=1) -> int:
         int: Число попыток
     """    
     count=0
-    start=1
-    end=100
-    predict_number = (start+end)/2
-    print(predict_number)
-    # while True:
-    #     count+=1
-        
-    #     #predict_number = np.random.randint(1,101) # поменять на мою логику
-    #     if predict_number > number:
-    #         pass
-    #     elif predict_number < number:
-    #         pass
-    #     else:
-    #         break #конец игры. выход из цикла
-    # return count
+    start=1 # минимальное загаданное число
+    end=101 # максимально загаданное число (не влючено)
+    predict_number = int((start+end)/2) # среднее число между лимитами, для ограничения диапозона поиска
+    while True:
+        count+=1
+        if predict_number > number:
+            end=predict_number # смещение верхней границы
+            predict_number = int((start+end)/2)
+        elif predict_number < number:
+            start=predict_number # смещение нижней границы
+            predict_number = int((start+end)/2)
+        else:
+            break #конец игры. выход из цикла
+    return count
 
 def score_game(random_predict) -> int:
     """За какое среднее количество попыток в 1000 подходов угадывает функция
